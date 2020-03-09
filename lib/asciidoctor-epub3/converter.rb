@@ -1157,7 +1157,7 @@ document.addEventListener('DOMContentLoaded', function(event, reader) {
 </platform>
 </display_options>'.to_ios unless format == :kf8
 
-          fonts_data_dir = doc.attr? 'epub3-stylesdir' ? workdir : DATA_DIR
+          fonts_data_dir = (doc.attr? 'epub3-stylesdir') ? workdir : DATA_DIR
           font_files.each do |font_file|
             @book.add_item font_file, content: File.join(fonts_data_dir, font_file)
           end
