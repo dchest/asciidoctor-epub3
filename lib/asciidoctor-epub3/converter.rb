@@ -1132,10 +1132,10 @@ document.addEventListener('DOMContentLoaded', function(event, reader) {
                     ::File.join DATA_DIR, 'styles'
                   end
 
-        fonts_dir = if doc.attr? 'epub3-fontsdir'
+        fonts_dir = if doc.attr? 'epub3-customfonts'
                       docdir = doc.attr 'docdir', '.'
                       docdir = '.' if docdir.empty?
-                      ::File.join docdir, doc.attr('epub3-fontsdir')
+                      docdir
                     else
                       DATA_DIR
                     end
