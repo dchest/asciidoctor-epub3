@@ -1132,6 +1132,14 @@ document.addEventListener('DOMContentLoaded', function(event, reader) {
                     ::File.join DATA_DIR, 'styles'
                   end
 
+        fonts_dir = if doc.attr? 'epub3-fontsdir'
+                      docdir = doc.attr 'docdir', '.'
+                      docdir = '.' if docdir.empty?
+                      ::File.join docdir, doc.attr('epub3-fontsdir')
+                    else
+                      DATA_DIR
+                    end
+
         # TODO: improve design/UX of custom theme functionality, including custom fonts
 
         if format == :kf8
@@ -1157,9 +1165,8 @@ document.addEventListener('DOMContentLoaded', function(event, reader) {
 </platform>
 </display_options>'.to_ios unless format == :kf8
 
-          fonts_data_dir = (doc.attr? 'epub3-stylesdir') ? workdir : DATA_DIR
           font_files.each do |font_file|
-            @book.add_item font_file, content: File.join(fonts_data_dir, font_file)
+            @book.add_item font_file, content: File.join(fonts_dir, font_file)
           end
         end
         nil
