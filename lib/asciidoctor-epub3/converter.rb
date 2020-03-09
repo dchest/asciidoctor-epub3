@@ -1145,7 +1145,7 @@ document.addEventListener('DOMContentLoaded', function(event, reader) {
           @book.add_item 'styles/epub3-css3-only.css', content: (postprocess_css_file ::File.join(workdir, 'epub3-css3-only.css'), format)
         end
 
-        font_files, font_css = select_fonts ::File.join(DATA_DIR, 'styles/epub3-fonts.css'), (doc.attr 'scripts', 'latin')
+        font_files, font_css = select_fonts ::File.join(workdir, 'epub3-fonts.css'), (doc.attr 'scripts', 'latin')
         @book.add_item 'styles/epub3-fonts.css', content: font_css
         unless font_files.empty?
           # NOTE metadata property in oepbs package manifest doesn't work; must use proprietary iBooks file instead
@@ -1157,8 +1157,9 @@ document.addEventListener('DOMContentLoaded', function(event, reader) {
 </platform>
 </display_options>'.to_ios unless format == :kf8
 
+          fonts_data_dir = doc.attr? 'epub3-stylesdir' ? workdir : DATA_DIR
           font_files.each do |font_file|
-            @book.add_item font_file, content: File.join(DATA_DIR, font_file)
+            @book.add_item font_file, content: File.join(fonts_data_dir, font_file)
           end
         end
         nil
