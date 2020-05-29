@@ -235,7 +235,7 @@ module Asciidoctor
           # add_chapter node
         end
 
-        nav_xhtml = @book.add _item('nav.xhtml', content: postprocess_xhtml(nav_doc(node, toc_items)), id: 'nav').landmark(type: 'toc', title: 'Table of Contents')
+        nav_xhtml = @book.add_item('nav.xhtml', content: postprocess_xhtml(nav_doc(node, toc_items)), id: 'nav').landmark(type: 'toc', title: 'Table of Contents')
         nav_xhtml.nav
 
         if node.doctype == 'book'
