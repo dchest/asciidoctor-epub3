@@ -220,6 +220,9 @@ module Asciidoctor
         add_cover_image node
         add_front_matter_page node
 
+        nav_xhtml = @book.add _item('nav.xhtml', content: postprocess_xhtml(nav_doc(node, toc_items)), id: 'nav').landmark(type: 'toc', title: 'Table of Contents')
+        nav_xhtml.nav
+
         if node.doctype == 'book'
           toc_items = []
           node.sections.each do |section|
@@ -234,9 +237,6 @@ module Asciidoctor
           toc_items = [node]
           add_chapter node
         end
-
-        nav_xhtml = @book.add_ordered_item('nav.xhtml', content: postprocess_xhtml(nav_doc(node, toc_items)), id: 'nav').landmark(type: 'toc', title: 'Table of Contents')
-        nav_xhtml.nav
 
         # NOTE gepub doesn't support building a ncx TOC with depth > 1, so do it ourselves
         toc_ncx = ncx_doc node, toc_items
