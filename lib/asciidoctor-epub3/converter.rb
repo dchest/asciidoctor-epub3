@@ -220,9 +220,6 @@ module Asciidoctor
         add_cover_image node
         add_front_matter_page node
 
-        nav_xhtml = @book.add _item('nav.xhtml', content: postprocess_xhtml(nav_doc(node, toc_items)), id: 'nav').landmark(type: 'toc', title: 'Table of Contents')
-        nav_xhtml.nav
-
         if node.doctype == 'book'
           toc_items = []
           node.sections.each do |section|
@@ -232,9 +229,23 @@ module Asciidoctor
               toc_items << subsection
             end
           end
-          node.content
+          # node.content
         else
           toc_items = [node]
+          # add_chapter node
+        end
+
+        nav_xhtml = @book.add _item('nav.xhtml', content: postprocess_xhtml(nav_doc(node, toc_items)), id: 'nav').landmark(type: 'toc', title: 'Table of Contents')
+        nav_xhtml.nav
+
+        if node.doctype == 'book'
+          node.sections.each do |section|
+            section.sections.each do |subsection|
+              next if get_chapter_name(node).nil?
+            end
+          end
+          node.content
+        else
           add_chapter node
         end
 
